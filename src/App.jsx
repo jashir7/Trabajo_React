@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import RegistroAprendiz from './components/Registro_aprendiz';
+import PresentacionAprendiz from './components/Presentacion_aprendiz';
 function App() {
 
   function saludar(){
@@ -56,6 +57,7 @@ function App() {
       <p>Explora más opciones de aprendizaje en nuestra plataforma.</p>
 
       <RegistroAprendiz/>
+      <PresentacionAprendiz/>
       <Footer />
 
     </div>
