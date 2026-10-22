@@ -8,10 +8,11 @@ function PresentacionAprendiz() {
     function manejarEnvio(evento) {
         evento.preventDefault();
         if (nombre.trim() === ""  || curso.trim() == ""){
-            setMensaje("Por favor completa todos los campos");
+            setMensaje("Completa todos los campos obligatorios antes de continuar");
             return;
+
         }
-        setMensaje(`Formulario enviado por: ${nombre}. Curso elegido ${curso}`);
+        setMensaje(`Presentacion enviada correctamente.`);
         setNombre("");
         setCurso("");
     }
@@ -28,7 +29,7 @@ function PresentacionAprendiz() {
                   type="text"
                   value={nombre}
                   onChange={(evento) => setNombre(evento.target.value)}
-                  placeholder="Ejemplo: Esteban"
+                  placeholder="Ejemplo: Jhon Carmona"
                   
                 />
                 <br/>
@@ -40,7 +41,7 @@ function PresentacionAprendiz() {
                   type="text"
                   value={curso}
                   onChange={(evento) => setCurso(evento.target.value)}
-                  placeholder="Ejemplo: React"
+                  placeholder="Ejemplo: Desarrollo web"
                 />
 
                 <br/>
@@ -50,13 +51,6 @@ function PresentacionAprendiz() {
             </form>
             {mensaje !== "" && (<p>{mensaje}</p>)}
             
-
-            <h3>Mis datos</h3>
-            <p>Mi nombre es: {nombre}</p>
-            <p>Me interesa aprender: {curso}</p>
-            <p>
-                ¡Hola, {nombre}! Te interesa aprender {curso}.
-            </p>
         </div>
     );
 }

@@ -1,29 +1,32 @@
-import { useState } from "react";
+import {useState} from "react";
+function Registro_aprendiz(){
+    const [nombre,setnombre]=useState("")
 
-function RegistroAprendiz() {
-  const [nombre, setNombre] = useState("");
+    function inscrito(event){
+        event.preventDefault();
+        if(nombre.trim() ===""){
+            alert(`Por favor, completa todos los campos`);
+            return;
+        }
+        alert(`Hola ${nombre}, te has registrado correctamente`);
+        setnombre("");
+    }
+        
 
-return (
-    <div>
-
-
-      <h2>Registro de Aprendiz</h2>
-
-
-      <label>Escribe tu nombre:</label>
-
-
-      <input
-        type="text"
-        value={nombre}
-        onChange={(e) => setNombre(e.target.value)}
-        placeholder="Escribe tu nombre"
-      />
-
-      <p>Bienvenido, {nombre}!</p>
-
-    </div>
-  );
+    return(
+        <div>
+            <h2>Registro de aprendiz</h2>
+            <label>escribe tu nombre</label>
+        <input
+            type= "text"
+            value={nombre}
+            onChange={(e)=> setnombre(e.target.value)}
+            placeholder= "Escribe tu nombre"
+        />
+        <p></p>
+        <button onClick = {inscrito}>registrarse</button>
+        </div>
+    );
 }
 
-export default RegistroAprendiz;
+export default Registro_aprendiz;
