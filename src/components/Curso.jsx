@@ -1,29 +1,38 @@
-import {useState} from 'react';
-function Curso(props) {
-  const [interesados, setInteresados] = useState(0);
-  const [inscritos, setInscritos] = useState(0);
-  function agregarInteresado() {
-    setInteresados(interesados + 1);
+import { useState } from 'react';
+import { Tarjetas } from './Tarjetas.jsx';
+
+export default function Gallery() {
+  const [index, setIndex] = useState(0);
+
+  function handleClick() {
+    if (index < Tarjetas.length - 1) {
+      setIndex(index + 1);
+    } else {
+      setIndex(0);
+    }
   }
-  function Mostrar_descripcion(){
-    alert(`¡Bienvenido al curso de ${props.nombre}!`);
-  }
-  function Inscribirme(){
-    alert(`¡Felicidades, se ha inscrito!`);
-    setInscritos(inscritos + 1);
-  }
+
+
+  let tarjeta = Tarjetas[index];
+
   return (
-    <div>
-      <h2>{props.nombre}</h2>
-      <p>{props.descripcion}.</p>
-      <button onClick={Mostrar_descripcion}> Ver mas</button>
-      <p>   </p>
-      <button onClick={Inscribirme}> Inscribase</button>
-      <p></p>
-      <button onClick={agregarInteresado}>Me interesa</button>
-      <p>Interesados: {interesados}</p>
-      <p>Inscritos: {inscritos}</p>
-    </div>
+    <>
+      <button onClick={handleClick}>
+        Siguiente
+      </button>
+      <h2>
+        <i>{tarjeta.nombre}</i> {}
+      </h2>
+      <h3>
+        ({index + 1} de {Tarjetas.length})
+      </h3>
+      <img
+        src={tarjeta.url}
+        alt={tarjeta.nombre}
+      />
+      <p>
+        {tarjeta.descripcion} {}
+      </p>
+    </>
   );
 }
-export default Curso;
