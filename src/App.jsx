@@ -23,21 +23,7 @@ function App() {
           <h2>Nuestros cursos</h2>
           <p>Ofrecemos una variedad de cursos para ayudarte a desarrollar tus habilidades</p>
 
-          <Curso
-          nombre = "Desarrollo web"
-          descripcion = "Aprende a crear paginas web modernas y atractivas" />
-          <Curso
-          nombre = "Bases de datos"
-          descripcion = "Aprende a gestionar y manipular bases de datos"/>
-          <Curso
-          nombre = "Inteligencia artificial"
-          descripcion = "Aprende a desarrollar soluciones basadas en intelifgencia artificial" />
-          <Curso
-          nombre = "Programacion con Java"
-          descripcion = "Aprende a desarrollar soluciones basadas en Java" />
-          <Curso
-          nombre = "Curso de Python"
-          descripcion = "Aprende a desarrollar soluciones basadas en Python" />
+          <Curso />
 
         </section>
 
