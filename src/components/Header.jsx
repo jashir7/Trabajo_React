@@ -1,9 +1,17 @@
+import "./Header.css";
+import SENA_LOGO from "../assets/SENA_LOGO.webp";
 function Header() {
   return (
-    <header>
-      <h1>Centro Nacional Colombo Aleman</h1>
-      <p>Formacion para el futuro</p>
-    </header>
+    <header className="Header">
+      <div className="Header-brand">
+        <h1 className="Title">Centro Nacional Colombo Alemán</h1>
+        <p className="Par">Formación para el futuro</p>
+        
+      </div>
+      <img src={SENA_LOGO} alt="Logo SENA" className="Header-logo" />
+      </header>
+      
   );
 }
+
 export default Header;
