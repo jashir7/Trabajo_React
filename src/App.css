@@ -19,7 +19,9 @@
 }
 
 h1{
-  color:darkcyan
+  color:darkcyan;
+  display: flex;
+  justify-content: center;
 }
 
 h2 {
