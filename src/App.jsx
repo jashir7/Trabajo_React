@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import RegistroAprendiz from './components/Registro_aprendiz';
 import PresentacionAprendiz from './components/Presentacion_aprendiz';
+import Ejemploeffect from './components/Ejemploeffect';
 function App() {
 
   function saludar(){
@@ -14,6 +15,7 @@ function App() {
     <div>
       <Header />
       <Navbar />
+      <Ejemploeffect/>
 
       <main id="inicio">
         <h2>Bienvenidos a nuestro portal de formacion</h2>
