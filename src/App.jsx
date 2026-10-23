@@ -8,7 +8,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Inicio from './views/Inicio';
 import Cursos from './views/Curso';
 import Registro from './views/Registro';
-
+import AcercaDe from './views/AcercaDe';
 function App() {
   const [cursos, setCursos] = useState(() => [...Tarjetas]);
 
@@ -24,6 +24,7 @@ function App() {
             element={<Cursos cursos={cursos} setCursos={setCursos} />}
           />
           <Route path="/registro" element={<Registro />} />
+          <Route path="/acerca-de" element={<AcercaDe />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
