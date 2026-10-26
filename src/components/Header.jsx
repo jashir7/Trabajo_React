@@ -12,10 +12,6 @@ function Header() {
       </header>
       
   );
-<<<<<<<<< Temporary merge branch 1
-
-=========
->>>>>>>>> Temporary merge branch 2
 }
 
 export default Header;
