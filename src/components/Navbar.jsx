@@ -1,18 +1,20 @@
-import './Navbar.css'; 
+import { NavLink } from 'react-router-dom';
+import './Navbar.css';
 
 function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <a href="#">SENA APP</a>
+        <NavLink to="/">SENA APP</NavLink>
       </div>
       <ul className="navbar-links">
-        <li><a href="#home">Inicio</a></li>
-        <li><a href="#about">Nosotros</a></li>
-        <li><a href="#services">Servicios</a></li>
-        <li><a href="#contact">Contacto</a></li>
-      </ul>
+        <li><NavLink to="/" end>Inicio</NavLink></li>
+        <li><NavLink to="/cursos">Cursos</NavLink></li>
+        <li><NavLink to="/registro">Registro</NavLink></li>
+        <li><NavLink to="/acerca-de">Acerca de</NavLink></li>
       
+
+      </ul>
     </nav>
   );
 }
