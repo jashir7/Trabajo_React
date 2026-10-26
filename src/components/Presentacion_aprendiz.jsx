@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function PresentacionAprendiz() {
     const [nombre, setNombre] = useState("");
@@ -6,14 +6,12 @@ function PresentacionAprendiz() {
     const [mensaje, setMensaje] = useState("");
     const [mostrarInfo, setMostrarInfo] = useState(false);
 
-    const [perfil, setperfil] = useState({ nombre: "", curso: "" });
-
-    useEffect(() => {
+    const [perfil, setPerfil] = useState(() => {
         const aprendizLocal = localStorage.getItem("aprendiz");
-        if (aprendizLocal) {
-            setperfil(JSON.parse(aprendizLocal));
-        }
-    }, []);
+        return aprendizLocal
+            ? JSON.parse(aprendizLocal)
+            : { nombre: "", curso: "" };
+    });
 
     function manejarEnvio(evento) {
         evento.preventDefault();
@@ -24,7 +22,7 @@ function PresentacionAprendiz() {
 
         const nuevosDatos = { nombre: nombre.trim(), curso: curso.trim() };
 
-        setperfil(nuevosDatos);
+        setPerfil(nuevosDatos);
         localStorage.setItem("aprendiz", JSON.stringify(nuevosDatos));
 
         setMensaje("Presentación enviada correctamente.");
