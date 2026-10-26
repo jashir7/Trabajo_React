@@ -9,6 +9,7 @@ import Inicio from './views/Inicio';
 import Cursos from './views/Curso';
 import Registro from './views/Registro';
 import AcercaDe from './views/AcercaDe';
+import UsuarioApi from './views/UsuarioApi';
 function App() {
   const [cursos, setCursos] = useState(() => [...Tarjetas]);
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/registro" element={<Registro />} />
           <Route path="/acerca-de" element={<AcercaDe />} />
           <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/UsuariosApi" element={<UsuarioApi />} />
         </Routes>
       </main>
       <Footer />
