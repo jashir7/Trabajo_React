@@ -13,7 +13,7 @@ function UsuarioApi(){
                 "https://jsonplaceholder.typicode.com/users"
             );
             if (!respuesta.ok) {
-                throw new error("no fue posible obtener ususarios")
+                throw new Error("no fue posible obtener ususarios")
             }
             const datos = await respuesta.json();
 
