@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-function UsuarioApi() {
+function Instructores() {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,4 +47,4 @@ function UsuarioApi() {
     );
 }
 
-export default UsuarioApi;
+export default Instructores;
