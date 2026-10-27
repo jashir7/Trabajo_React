@@ -10,6 +10,7 @@ import Cursos from './views/Curso';
 import Registro from './views/Registro';
 import AcercaDe from './views/AcercaDe';
 import Usuarios from './views/Usuarios';
+import Fichas from './views/Fichas'
 
 function App() {
   const [cursos, setCursos] = useState(() => {
@@ -34,7 +35,9 @@ function App() {
           <Route path="/registro" element={<Registro />} />
           <Route path="/acerca-de" element={<AcercaDe />} />
           <Route path="*" element={<Navigate to="/" replace />} />
-          <Route path="/UsuarioApi" element={<UsuarioApi />} />
+          <Route path="/Usuarios" element={<Usuarios />} />
+          <Route path="/Fichas" element={<Fichas />} />
+
         </Routes>
       </main>
       <Footer />

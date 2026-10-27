@@ -39,11 +39,11 @@ if (error){
 
 return(
     <section>
-        <h2>Usuarios de prueba</h2>
-        <p>Esta informacion proviene de una api externa</p>
+        <h2>UFICHAS</h2>
+        <p>Fichas provenientes de api en latin</p>
         <div className="lista-usuarios">
             {usuario.map((usuario) => (
-                <article className="lista-usuario">
+                <article className="lista-ficha">
                     <div key={usuario.id}/>
                     <h3>{usuario.name}</h3>
                     <p>{usuario.email}</p>
