@@ -9,11 +9,11 @@ export default function Academico() {
         <ul>
         
           <li><NavLink to="/" end>Inicio</NavLink></li>
-          <li><NavLink to="/fichas">Fichas</NavLink></li>
-        <li><NavLink to="/evaluaciones">Evaluaciones</NavLink></li>
-        <li><NavLink to="/usuarios-api">Usuarios API</NavLink></li>
-        <li><NavLink to="/competencias">Tareas de demostracion</NavLink></li>
-
+          <li><NavLink to="/Fichas">Fichas</NavLink></li>
+        <li><NavLink to="/Evaluaciones">Evaluaciones</NavLink></li>
+        <li><NavLink to="/UsuarioApi">Usuarios API</NavLink></li>
+        <li><NavLink to="/competencias">Competencias</NavLink></li>
+        <li><NavLink to="/Instructores">Instructores</NavLink></li>
 
 
           
