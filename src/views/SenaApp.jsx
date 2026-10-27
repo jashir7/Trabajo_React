@@ -11,6 +11,7 @@ export default function Academico() {
           <li><NavLink to="/Fichas">Fichas</NavLink></li>
         <li><NavLink to="/Evaluaciones">Evaluaciones</NavLink></li>
         <li><NavLink to="/UsuarioApi">Usuarios API</NavLink></li>
+        <li><NavLink to="/competencias">Competencias</NavLink></li>
 
 
           
@@ -18,4 +19,3 @@ export default function Academico() {
     </div>
   );
 }
-
