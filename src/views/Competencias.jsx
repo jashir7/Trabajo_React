@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function Competencias() {
+function TareasDemostracion() {
     const [tareas, setTareas] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState("");
@@ -87,4 +87,4 @@ function Competencias() {
     );
 }
 
-export default Competencias;
+export default TareasDemostracion;

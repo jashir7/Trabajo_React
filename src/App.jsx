@@ -13,7 +13,7 @@ import UsuarioApi from './views/UsuarioApi';
 import Evaluaciones from './views/Evaluaciones';
 import Fichas from './views/Fichas'
 import Academico from './views/SenaApp';
-import Competencias from './views/Competencias';
+import Competencias from './views/competencias';
 
 function App() {
   const [cursos, setCursos] = useState(() => {
