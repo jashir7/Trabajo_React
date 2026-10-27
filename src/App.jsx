@@ -9,7 +9,8 @@ import Inicio from './views/Inicio';
 import Cursos from './views/Curso';
 import Registro from './views/Registro';
 import AcercaDe from './views/AcercaDe';
-import UsuarioApi from './views/UsuarioApi';
+import Instructores from './views/Instructores';
+import UsuarioApi from './views/Usuarios';
 import Evaluaciones from './views/Evaluaciones';
 import Fichas from './views/Fichas'
 import Academico from './views/SenaApp';
@@ -34,10 +35,11 @@ function App() {
           <Route path="/registro" element={<Registro />} />
           <Route path="/acerca-de" element={<AcercaDe />} />
           <Route path="*" element={<Navigate to="/" replace />} />
-          <Route path="/UsuarioApi" element={<UsuarioApi />} />
+          <Route path="/Instructores" element={<Instructores />} />
           <Route path="/Evaluaciones" element={<Evaluaciones />} />
           <Route path="/Fichas" element={<Fichas />} />
           <Route path="/academico" element={<Academico />} />
+          <Route path="/usuarios" element={<UsuarioApi />} />
         </Routes>
       </main>
       <Footer />
