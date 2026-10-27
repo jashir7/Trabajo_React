@@ -9,8 +9,11 @@ import Inicio from './views/Inicio';
 import Cursos from './views/Curso';
 import Registro from './views/Registro';
 import AcercaDe from './views/AcercaDe';
-import UsuariosApi from './views/UsuariosApi';
-import SenaApp from './views/SenaApp';
+import UsuarioApi from './views/UsuarioApi';
+import Evaluaciones from './views/Evaluaciones';
+import Fichas from './views/Fichas'
+import Academico from './views/SenaApp';
+
 function App() {
   const [cursos, setCursos] = useState(() => {
     const cursosGuardados = localStorage.getItem("misCursos");
@@ -30,10 +33,11 @@ function App() {
           <Route path="/cursos" element={<Cursos cursos={cursos} setCursos={setCursos} />}/>
           <Route path="/registro" element={<Registro />} />
           <Route path="/acerca-de" element={<AcercaDe />} />
-          <Route path="sena-app" element={<SenaApp />} />
-          <Route path="/usuarios" element={<UsuariosApi />} />
-  
-
+          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/UsuarioApi" element={<UsuarioApi />} />
+          <Route path="/Evaluaciones" element={<Evaluaciones />} />
+          <Route path="/Fichas" element={<Fichas />} />
+          <Route path="/academico" element={<Academico />} />
         </Routes>
       </main>
       <Footer />
