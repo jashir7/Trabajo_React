@@ -28,8 +28,6 @@ function App() {
           <Route path="/registro" element={<Registro />} />
           <Route path="/acerca-de" element={<AcercaDe />} />
           <Route path="*" element={<Navigate to="/" replace />} />
-          <Route path="/Usuarios" element={<Usuarios />} />
-          
         </Routes>
       </main>
       <Footer />
