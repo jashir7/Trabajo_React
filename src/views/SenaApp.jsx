@@ -2,7 +2,18 @@ import { NavLink } from 'react-router-dom';
 
 function SenaApp() {
   return (
-    <h2>aguacte</h2>
+    
+    <div>
+        <h2>Aguacate</h2>
+        <ul>
+        
+          <li><NavLink to="/" end>Inicio</NavLink></li>
+          <li><NavLink to="/Fichas">Fichas</NavLink></li>
+
+
+          
+        </ul>
+    </div>
   );
 }
 
