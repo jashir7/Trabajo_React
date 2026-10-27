@@ -11,6 +11,8 @@ import Registro from './views/Registro';
 import AcercaDe from './views/AcercaDe';
 import UsuarioApi from './views/UsuarioApi';
 import Evaluaciones from './views/Evaluaciones';
+import Fichas from './views/Fichas'
+import Academico from './views/SenaApp';
 
 function App() {
   const [cursos, setCursos] = useState(() => {
@@ -28,15 +30,14 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Inicio />} />
-          <Route
-            path="/cursos"
-            element={<Cursos cursos={cursos} setCursos={setCursos} />}
-          />
+          <Route path="/cursos" element={<Cursos cursos={cursos} setCursos={setCursos} />}/>
           <Route path="/registro" element={<Registro />} />
           <Route path="/acerca-de" element={<AcercaDe />} />
           <Route path="*" element={<Navigate to="/" replace />} />
           <Route path="/UsuarioApi" element={<UsuarioApi />} />
           <Route path="/Evaluaciones" element={<Evaluaciones />} />
+          <Route path="/Fichas" element={<Fichas />} />
+          <Route path="/academico" element={<Academico />} />
         </Routes>
       </main>
       <Footer />
