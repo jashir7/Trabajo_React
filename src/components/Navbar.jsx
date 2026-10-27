@@ -13,8 +13,7 @@ function Navbar() {
         <li><NavLink to="/registro">Registro</NavLink></li>
         <li><NavLink to="/Usuarios">Usuarios</NavLink></li>
         <li><NavLink to="/acerca-de">Acerca de</NavLink></li>
-      
-
+        <li><NavLink to="/UsuarioApi">Usuarios API</NavLink></li>
       </ul>
     </nav>
   );

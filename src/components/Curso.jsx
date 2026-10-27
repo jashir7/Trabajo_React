@@ -1,19 +1,30 @@
 import { useState } from 'react';
-import { Tarjetas } from './Tarjetas.jsx';
+import GestorCurso from "./GestorCurso"; 
 
-export default function Gallery() {
+export default function Cursos({ cursos, setCursos }) {
   const [index, setIndex] = useState(0);
 
+
   function handleClick() {
-    if (index < Tarjetas.length - 1) {
+    if (index < cursos.length - 1) {
       setIndex(index + 1);
     } else {
       setIndex(0);
     }
   }
 
+  if (cursos.length === 0) {
+    return (
+      <>
+        <h2>No hay cursos registrados.</h2>
+        {}
+        <GestorCurso cursos={cursos} setCursos={setCursos} />
+      </>
+    );
+  }
 
-  let tarjeta = Tarjetas[index];
+  
+  let tarjeta = cursos[index];
 
   return (
     <>
@@ -21,18 +32,23 @@ export default function Gallery() {
         Siguiente
       </button>
       <h2>
-        <i>{tarjeta.nombre}</i> {}
+        <i>{tarjeta.nombre}</i>
       </h2>
       <h3>
-        ({index + 1} de {Tarjetas.length})
+        ({index + 1} de {cursos.length})
       </h3>
       <img
         src={tarjeta.url}
         alt={tarjeta.nombre}
       />
       <p>
-        {tarjeta.descripcion} {}
+        {tarjeta.descripcion}
       </p>
+
+      <hr /> {}
+
+      {}
+      <GestorCurso cursos={cursos} setCursos={setCursos} />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -12,7 +12,13 @@ import AcercaDe from './views/AcercaDe';
 import Usuarios from './views/Usuarios';
 
 function App() {
-  const [cursos, setCursos] = useState(() => [...Tarjetas]);
+  const [cursos, setCursos] = useState(() => {
+    const cursosGuardados = localStorage.getItem("misCursos");
+    return cursosGuardados ? JSON.parse(cursosGuardados) : [...Tarjetas];
+  });
+  useEffect(() => {
+    localStorage.setItem("misCursos", JSON.stringify(cursos));
+  }, [cursos]);
 
   return (
     <div>
@@ -28,6 +34,7 @@ function App() {
           <Route path="/registro" element={<Registro />} />
           <Route path="/acerca-de" element={<AcercaDe />} />
           <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/UsuarioApi" element={<UsuarioApi />} />
         </Routes>
       </main>
       <Footer />
