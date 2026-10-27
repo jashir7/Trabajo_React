@@ -21,14 +21,7 @@ function Inicio() {
         </p>
       </section>
 
-      <section id="contacto">
-        <h2>Contacto</h2>
-        <p>
-          Puedes conocer nuestros cursos y registrarte como aprendiz desde
-          este portal.
-        </p>
-      </section>
-
+      
       <section id="contacto">
         <h2>Contacto</h2>
         <p>

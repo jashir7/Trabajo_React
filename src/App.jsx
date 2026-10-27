@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -12,7 +12,13 @@ import AcercaDe from './views/AcercaDe';
 import UsuariosApi from './views/UsuariosApi';
 import SenaApp from './views/SenaApp';
 function App() {
-  const [cursos, setCursos] = useState(() => [...Tarjetas]);
+  const [cursos, setCursos] = useState(() => {
+    const cursosGuardados = localStorage.getItem("misCursos");
+    return cursosGuardados ? JSON.parse(cursosGuardados) : [...Tarjetas];
+  });
+  useEffect(() => {
+    localStorage.setItem("misCursos", JSON.stringify(cursos));
+  }, [cursos]);
 
   return (
     <div>

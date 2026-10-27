@@ -11,6 +11,7 @@ function Navbar() {
         <li><NavLink to="/" end>Inicio</NavLink></li>
         <li><NavLink to="/cursos">Cursos</NavLink></li>
         <li><NavLink to="/registro">Registro</NavLink></li>
+        <li><NavLink to="/Usuarios">Usuarios</NavLink></li>
         <li><NavLink to="/acerca-de">Acerca de</NavLink></li>
         <li><NavLink to="/usuarios">Usuarios</NavLink></li>
       
