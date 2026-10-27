@@ -28,16 +28,11 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Inicio />} />
-          <Route
-            path="/cursos"
-            element={<Cursos cursos={cursos} setCursos={setCursos} />}
-          />
+          <Route path="/cursos" element={<Cursos cursos={cursos} setCursos={setCursos} />}/>
           <Route path="/registro" element={<Registro />} />
           <Route path="/acerca-de" element={<AcercaDe />} />
           <Route path="*" element={<Navigate to="/" replace />} />
-          <Route path="/Usuarios" element={<Usuarios />} />
-          <Route path="/Fichas" element={<Fichas />} />
-
+          <Route path="/UsuarioApi" element={<UsuarioApi />} />
         </Routes>
       </main>
       <Footer />
