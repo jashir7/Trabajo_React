@@ -12,7 +12,6 @@ function Navbar() {
         <li><NavLink to="/cursos">Cursos</NavLink></li>
         <li><NavLink to="/registro">Registro</NavLink></li>
         <li><NavLink to="/Usuarios">Usuarios</NavLink></li>
-        <li><NavLink to="/Fichas">Fichas</NavLink></li>
         <li><NavLink to="/acerca-de">Acerca de</NavLink></li>
 
       </ul>
