@@ -10,7 +10,7 @@ import Cursos from './views/Curso';
 import Registro from './views/Registro';
 import AcercaDe from './views/AcercaDe';
 import Instructores from './views/Instructores';
-import UsuarioApi from './views/Usuarios';
+import Usuario from './views/Usuarios';
 import Evaluaciones from './views/Evaluaciones';
 import Fichas from './views/Fichas'
 import Academico from './views/SenaApp';
@@ -41,7 +41,7 @@ function App() {
           <Route path="/Fichas" element={<Fichas />} />
           <Route path="/academico" element={<Academico />} />
           <Route path="/competencias" element={<Competencias />} />
-          <Route path="/usuarios" element={<UsuarioApi />} />
+          <Route path="/usuarios" element={<Usuario />} />
         </Routes>
       </main>
       <Footer />
