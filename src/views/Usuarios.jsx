@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-function UsuarioApi() {
+function Usuario() {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,8 +32,8 @@ function UsuarioApi() {
 
     return (
         <section className="usuarios-api">
-            <h2>Instructores</h2>
-            <p>Estos instructores son obtenidos de la API de prueba JSONPlaceholder.</p>
+            <h2>Usuarios</h2>
+            <p>Estos usuarios son obtenidos de la API de prueba JSONPlaceholder.</p>
             <div className="lista-usuarios">
                 {usuarios.map((usuario) => (
                     <li key={usuario.id}>
@@ -46,4 +46,4 @@ function UsuarioApi() {
     );
 }
 
-export default UsuarioApi;
+export default Usuario;
