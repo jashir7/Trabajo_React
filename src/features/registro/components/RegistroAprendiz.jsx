@@ -1,33 +1,65 @@
 import { useState } from "react";
 
-function RegistroAprendiz() {
-    const [nombre, setnombre] = useState("")
+function RegistroAprendiz({ registro = [], setRegistro }) {
+    const [nombre, setNombre] = useState("");
+    const [mensaje, setMensaje] = useState("");
 
     function inscrito(event) {
         event.preventDefault();
         if (nombre.trim() === "") {
-            alert(`Por favor, completa todos los campos`);
+            setMensaje("Por favor, completa todos los campos.");
             return;
         }
-        alert(`Hola ${nombre}, te has registrado correctamente`);
-        setnombre("");
+
+        const nuevoUsuario = {
+            id: Date.now().toString(),
+            nombre: nombre.trim(),
+        };
+
+        if (setRegistro) {
+            setRegistro([...registro, nuevoUsuario]);
+        }
+        setMensaje(`¡Hola ${nombre}, te has registrado correctamente!`);
+        setNombre("");
     }
 
     return (
         <div>
             <h2>Registro de aprendiz</h2>
-            <label>escribe tu nombre</label>
-            <input
-                type="text"
-                value={nombre}
-                onChange={(e) => setnombre(e.target.value)}
-                placeholder="Escribe tu nombre"
-            />
-            <p></p>
-            <button onClick={inscrito}>registrarse</button>
+            <form onSubmit={inscrito}>
+                <label htmlFor="nombre-registro">Escribe tu nombre</label>
+                <input
+                    id="nombre-registro"
+                    type="text"
+                    value={nombre}
+                    onChange={(e) => setNombre(e.target.value)}
+                    placeholder="Escribe tu nombre"
+                />
+                <p></p>
+                <button type="submit">Registrarse</button>
+            </form>
+
+            {mensaje && <p role="status">{mensaje}</p>}
+
+            <h3>Aprendices registrados: {registro.length}</h3>
+            <ul>
+                {registro.map((usuario) => (
+                    <li key={usuario.id}>
+                        {usuario.nombre}
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setRegistro(registro.filter((u) => u.id !== usuario.id))
+                            }
+                            style={{ marginLeft: "10px" }}
+                        >
+                            Eliminar
+                        </button>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }
 
 export default RegistroAprendiz;
-
