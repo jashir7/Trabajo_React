@@ -18,7 +18,7 @@ function Competencias() {
                 
                 const datos = await respuesta.json();
                 setcompetencias(datos);
-            } catch (err) {
+            } catch (error) {
                 seterror("no pudimos cargar los usuarios, intenta nuevamente");
             } finally {
                 setcargando(false);
