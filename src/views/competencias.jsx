@@ -1,53 +1,90 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-function Competencias() {
-    const [competencias, setcompetencias] = useState([]);
-    const [cargando, setcargando] = useState(true);
-    const [error, seterror] = useState("");
+function TareasDemostracion() {
+    const [tareas, setTareas] = useState([]);
+    const [cargando, setCargando] = useState(true);
+    const [error, setError] = useState("");
+    const [intento, setIntento] = useState(0);
 
     useEffect(() => {
-        async function obtenerusuarios() {
+        const controller = new AbortController();
+
+        async function obtenerTareas() {
+            setCargando(true);
+            setError("");
+
             try {
-                setcargando(true);
                 const respuesta = await fetch(
-                    "https://jsonplaceholder.typicode.com/todos"
+                    "https://jsonplaceholder.typicode.com/todos",
+                    { signal: controller.signal }
                 );
+
                 if (!respuesta.ok) {
-                    throw new Error("No fue posible cargar usuarios");
+                    throw new Error(`El servidor respondio con el estado ${respuesta.status}.`);
                 }
-                
+
                 const datos = await respuesta.json();
-                setcompetencias(datos);
-            } catch (err) {
-                seterror("no pudimos cargar los usuarios, intenta nuevamente");
+
+                if (!Array.isArray(datos) || !datos.every((tarea) =>
+                    tarea &&
+                    typeof tarea.id === "number" &&
+                    typeof tarea.title === "string" &&
+                    typeof tarea.completed === "boolean"
+                )) {
+                    throw new Error("La respuesta recibida no tiene el formato esperado.");
+                }
+
+                setTareas(datos);
+            } catch (errorObteniendoTareas) {
+                const solicitudCancelada =
+                    errorObteniendoTareas instanceof Error &&
+                    errorObteniendoTareas.name === "AbortError";
+
+                if (!solicitudCancelada) {
+                    const detalle = errorObteniendoTareas instanceof Error
+                        ? errorObteniendoTareas.message
+                        : "Ocurrio un error inesperado.";
+                    setError(`No se pudieron cargar las tareas. ${detalle}`);
+                }
             } finally {
-                setcargando(false);
+                if (!controller.signal.aborted) {
+                    setCargando(false);
+                }
             }
         }
 
-        obtenerusuarios();
-    }, []);
+        obtenerTareas();
 
-    if (cargando) return <p>Cargando usuarios...</p>;
-    if (error) return <p>Error: {error}</p>;
+        return () => controller.abort();
+    }, [intento]);
+
+    if (cargando) return <p role="status">Cargando tareas de demostracion...</p>;
+    if (error) {
+        return (
+            <section aria-labelledby="tareas-titulo">
+                <h2 id="tareas-titulo">Tareas de demostracion</h2>
+                <p role="alert">{error}</p>
+                <button type="button" onClick={() => setIntento((actual) => actual + 1)}>
+                    Reintentar
+                </button>
+            </section>
+        );
+    }
 
     return (
-        <div>
-            <h2>Lista de competencias</h2>
-            <div>
-                {competencias.map((competencia) => (
-                    <div key={competencia.id}>
-                        <strong>{competencia.title}</strong>
-                        <span>
-                            Estado: {competencia.completed ? "Completado" : "No completado"}
-                        </span>
-                        <br />
-                        <br />
-                    </div>
+        <section aria-labelledby="tareas-titulo">
+            <h2 id="tareas-titulo">Tareas de demostracion</h2>
+            <p>Datos de prueba obtenidos de JSONPlaceholder; no son competencias reales.</p>
+            <ul>
+                {tareas.map((tarea) => (
+                    <li key={tarea.id}>
+                        <strong>{tarea.title}</strong>
+                        <span> Estado: {tarea.completed ? "Completada" : "Pendiente"}</span>
+                    </li>
                 ))}
-            </div>
-        </div>
+            </ul>
+        </section>
     );
 }
 
-export default Competencias;
+export default TareasDemostracion;
