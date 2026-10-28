@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function Competencias() {
+function CompetenciasPage() {
     const [competencias, setcompetencias] = useState([]);
     const [cargando, setcargando] = useState(true);
     const [error, seterror] = useState("");
@@ -50,4 +50,5 @@ function Competencias() {
     );
 }
 
-export default Competencias;
+export default CompetenciasPage;
+

@@ -5,16 +5,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-
 }
 
 .Title{
     font: clamp(1rem, 4vw, 3rem);
     margin: 0;
     font-weight: 700;
-
-
 }
 
 .Par{
@@ -22,10 +18,10 @@ font-size: clamp(1rem, 2.5vw, 1.25rem);
 margin-top: 0.6rem;
 color: #39A900;
 font-style: italic;
-
 }
 
 .Header-logo {
   width: 70px;
   height: auto;
 }
+

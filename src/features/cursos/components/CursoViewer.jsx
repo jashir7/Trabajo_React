@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import GestorCurso from "./GestorCurso"; 
+import GestorCurso from "./GestorCurso";
 
-export default function Cursos({ cursos, setCursos }) {
+export default function CursoViewer({ cursos, setCursos }) {
   const [index, setIndex] = useState(0);
-
 
   function handleClick() {
     if (index < cursos.length - 1) {
@@ -17,13 +16,11 @@ export default function Cursos({ cursos, setCursos }) {
     return (
       <>
         <h2>No hay cursos registrados.</h2>
-        {}
         <GestorCurso cursos={cursos} setCursos={setCursos} />
       </>
     );
   }
 
-  
   let tarjeta = cursos[index];
 
   return (
@@ -45,10 +42,10 @@ export default function Cursos({ cursos, setCursos }) {
         {tarjeta.descripcion}
       </p>
 
-      <hr /> {}
+      <hr />
 
-      {}
       <GestorCurso cursos={cursos} setCursos={setCursos} />
     </>
   );
 }
+

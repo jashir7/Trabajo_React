@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function Inicio() {
+function InicioPage() {
   return (
     <>
       <section className="inicio" id="inicio">
@@ -21,7 +21,6 @@ function Inicio() {
         </p>
       </section>
 
-      
       <section id="contacto">
         <h2>Contacto</h2>
         <p>
@@ -33,4 +32,5 @@ function Inicio() {
   );
 }
 
-export default Inicio;
+export default InicioPage;
+

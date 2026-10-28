@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-function Instructores() {
+
+function InstructoresPage() {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,4 +48,5 @@ function Instructores() {
     );
 }
 
-export default Instructores;
+export default InstructoresPage;
+

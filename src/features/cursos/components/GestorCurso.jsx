@@ -1,5 +1,5 @@
-import { useState} from "react";
-import "./tarjetas.css";
+import { useState } from "react";
+import "./GestorCurso.css";
 
 function GestorCurso({ cursos, setCursos }) {
   const [nombre, setNombre] = useState("");
@@ -8,7 +8,6 @@ function GestorCurso({ cursos, setCursos }) {
   const [id, setId] = useState(null);
   const [mensaje, setMensaje] = useState("");
   const [indiceCurso, setIndiceCurso] = useState(0);
-
 
   function limpiarFormulario() {
     setNombre("");
@@ -49,8 +48,6 @@ function GestorCurso({ cursos, setCursos }) {
       ]);
       setMensaje("Curso agregado correctamente.");
     }
-
-    
   }
 
   function editarCurso(curso) {
@@ -195,3 +192,4 @@ function GestorCurso({ cursos, setCursos }) {
 }
 
 export default GestorCurso;
+

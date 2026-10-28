@@ -14,10 +14,10 @@ function Navbar() {
         <li><NavLink to="/acerca-de">Acerca de</NavLink></li>
         <li><NavLink to="/usuarios">Usuarios</NavLink></li>
         <li><NavLink to="/academico">Academico</NavLink></li>
-
       </ul>
     </nav>
   );
 }
 
 export default Navbar;
+

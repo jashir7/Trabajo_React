@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
-
-function AcercaDe() {
+function AcercaDePage() {
   return (
     <section className="acerca-de" id="acerca-de">
         <h2>Acerca de nosotros</h2>
@@ -14,4 +12,5 @@ function AcercaDe() {
   );
 }   
 
-export default AcercaDe;
+export default AcercaDePage;
+

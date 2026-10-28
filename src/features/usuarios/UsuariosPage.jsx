@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-function Usuario() {
+
+function UsuariosPage() {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -46,4 +47,5 @@ function Usuario() {
     );
 }
 
-export default Usuario;
+export default UsuariosPage;
+

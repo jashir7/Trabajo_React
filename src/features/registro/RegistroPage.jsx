@@ -1,7 +1,7 @@
-import PresentacionAprendiz from "../components/Presentacion_aprendiz";
-import RegistroAprendiz from "../components/Registro_aprendiz";
+import PresentacionAprendiz from "./components/PresentacionAprendiz";
+import RegistroAprendiz from "./components/RegistroAprendiz";
 
-function Registro() {
+function RegistroPage() {
   return (
     <section id="registro">
       <h2>Registro de aprendiz</h2>
@@ -12,4 +12,5 @@ function Registro() {
   );
 }
 
-export default Registro;
+export default RegistroPage;
+

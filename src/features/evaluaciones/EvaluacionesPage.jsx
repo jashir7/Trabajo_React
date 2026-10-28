@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-function Evaluaciones() {
+
+function EvaluacionesPage() {
   const [evaluaciones, setEvaluaciones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,4 +48,5 @@ function Evaluaciones() {
     );
 }
 
-export default Evaluaciones;
+export default EvaluacionesPage;
+
