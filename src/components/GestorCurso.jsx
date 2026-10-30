@@ -1,12 +1,14 @@
-import { useState} from "react";
+import { useState } from "react";
 import "./tarjetas.css";
 
-function GestorCurso({ cursos, setCursos }) {
+function GestorCurso({ cursos, onCrearCurso, onGuardarCurso, onEliminarCurso }) {
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [url, setUrl] = useState("");
   const [id, setId] = useState(null);
   const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
+  const [procesando, setProcesando] = useState(false);
   const [indiceCurso, setIndiceCurso] = useState(0);
 
 
@@ -17,8 +19,10 @@ function GestorCurso({ cursos, setCursos }) {
     setId(null);
   }
 
-  function manejarEnvio(evento) {
+  async function manejarEnvio(evento) {
     evento.preventDefault();
+    setMensaje("");
+    setError("");
 
     if (
       nombre.trim() === "" ||
@@ -35,22 +39,22 @@ function GestorCurso({ cursos, setCursos }) {
       url: url.trim(),
     };
 
-    if (id !== null) {
-      setCursos((cursosActuales) =>
-        cursosActuales.map((curso) =>
-          curso.id === id ? { ...curso, ...cursoActualizado } : curso,
-        ),
-      );
-      setMensaje("Curso actualizado correctamente.");
-    } else {
-      setCursos((cursosActuales) => [
-        ...cursosActuales,
-        { id: Date.now(), ...cursoActualizado },
-      ]);
-      setMensaje("Curso agregado correctamente.");
+    setProcesando(true);
+    try {
+      if (id !== null) {
+        await onGuardarCurso(id, cursoActualizado);
+        setMensaje("Curso actualizado correctamente.");
+      } else {
+        await onCrearCurso(cursoActualizado);
+        setMensaje("Curso agregado correctamente.");
+      }
+      limpiarFormulario();
+    } catch (errorGuardandoCurso) {
+      console.error(errorGuardandoCurso);
+      setError(errorGuardandoCurso.message || "No se pudo guardar el curso.");
+    } finally {
+      setProcesando(false);
     }
-
-    
   }
 
   function editarCurso(curso) {
@@ -61,7 +65,7 @@ function GestorCurso({ cursos, setCursos }) {
     setMensaje("");
   }
 
-  function eliminarCurso(idEliminar) {
+  async function eliminarCurso(idEliminar) {
     const confirmar = window.confirm(
       "¿Estás seguro de que deseas eliminar este curso?",
     );
@@ -70,22 +74,29 @@ function GestorCurso({ cursos, setCursos }) {
       return;
     }
 
-    const indiceEliminar = cursos.findIndex((curso) => curso.id === idEliminar);
-    setCursos((cursosActuales) =>
-      cursosActuales.filter((curso) => curso.id !== idEliminar),
-    );
+    setMensaje("");
+    setError("");
+    setProcesando(true);
+    try {
+      const indiceEliminar = cursos.findIndex((curso) => curso.id === idEliminar);
+      await onEliminarCurso(idEliminar);
 
-    if (indiceEliminar < indiceCurso) {
-      setIndiceCurso(indiceCurso - 1);
-    } else if (indiceEliminar === indiceCurso) {
-      setIndiceCurso(Math.min(indiceCurso, cursos.length - 2));
+      if (indiceEliminar < indiceCurso) {
+        setIndiceCurso(indiceCurso - 1);
+      } else if (indiceEliminar === indiceCurso) {
+        setIndiceCurso(Math.max(0, Math.min(indiceCurso, cursos.length - 2)));
+      }
+
+      if (id === idEliminar) {
+        limpiarFormulario();
+      }
+      setMensaje("Curso eliminado correctamente.");
+    } catch (errorEliminandoCurso) {
+      console.error(errorEliminandoCurso);
+      setError(errorEliminandoCurso.message || "No se pudo eliminar el curso.");
+    } finally {
+      setProcesando(false);
     }
-
-    if (id === idEliminar) {
-      limpiarFormulario();
-    }
-
-    setMensaje("Curso eliminado correctamente.");
   }
 
   function cancelarEdicion() {
@@ -139,11 +150,11 @@ function GestorCurso({ cursos, setCursos }) {
         </div>
 
         <div>
-          <button type="submit">
+          <button type="submit" disabled={procesando}>
             {id !== null ? "Guardar cambios" : "Agregar curso"}
           </button>
           {id !== null && (
-            <button type="button" onClick={cancelarEdicion}>
+            <button type="button" onClick={cancelarEdicion} disabled={procesando}>
               Cancelar edición
             </button>
           )}
@@ -155,6 +166,7 @@ function GestorCurso({ cursos, setCursos }) {
           {mensaje}
         </p>
       )}
+      {error && <p role="alert">{error}</p>}
 
       <h3>Cursos registrados: {cursos.length}</h3>
 
@@ -168,12 +180,13 @@ function GestorCurso({ cursos, setCursos }) {
             )}
             <h3>{cursoActual.nombre}</h3>
             <p>{cursoActual.descripcion}</p>
-            <button type="button" onClick={() => editarCurso(cursoActual)}>
+            <button type="button" onClick={() => editarCurso(cursoActual)} disabled={procesando}>
               Editar
             </button>
             <button
               type="button"
               onClick={() => eliminarCurso(cursoActual.id)}
+              disabled={procesando}
             >
               Eliminar
             </button>
@@ -185,7 +198,7 @@ function GestorCurso({ cursos, setCursos }) {
           <p>
             {indiceCurso + 1} de {cursos.length}
           </p>
-          <button type="button" onClick={siguienteCurso}>
+          <button type="button" onClick={siguienteCurso} disabled={procesando}>
             Siguiente
           </button>
         </div>

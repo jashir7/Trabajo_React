@@ -62,7 +62,7 @@ function ActualizarAprendiz() {
                 : datosCompletos;
 
             if (metodo === "PATCH" && Object.keys(datos).length === 0) {
-                setError("Modifica al menos un campo antes de usar PATCH.");
+                setMensaje("No hay cambios para enviar. Edita el nombre o el correo antes de usar PATCH.");
                 return;
             }
 

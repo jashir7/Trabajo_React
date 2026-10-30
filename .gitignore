@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+data/aprendices.json
+data/presentacion.json
 
 # Editor directories and files
 .vscode/*

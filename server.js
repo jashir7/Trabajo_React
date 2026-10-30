@@ -7,16 +7,24 @@ import { fileURLToPath } from "node:url";
 const root = dirname(fileURLToPath(import.meta.url));
 const dataDirectory = join(root, "data");
 const dataFile = join(dataDirectory, "aprendices.json");
-const port = Number(process.env.API_PORT || 3001);
+const coursesFile = join(dataDirectory, "cursos.json");
+const presentationFile = join(dataDirectory, "presentacion.json");
+const port = Number(process.env.API_PORT || 3002);
 
 mkdirSync(dataDirectory, { recursive: true });
-try {
-    readFileSync(dataFile, "utf8");
-} catch (error) {
-    if (error.code !== "ENOENT") {
-        throw error;
+for (const [file, initialValue] of [
+    [dataFile, "[]\n"],
+    [coursesFile, "[]\n"],
+    [presentationFile, "null\n"]
+]) {
+    try {
+        readFileSync(file, "utf8");
+    } catch (error) {
+        if (error.code !== "ENOENT") {
+            throw error;
+        }
+        writeFileSync(file, initialValue);
     }
-    writeFileSync(dataFile, "[]\n");
 }
 
 function readAprendices() {
@@ -90,10 +98,93 @@ function validateCambiosAprendiz(body) {
     return cambios;
 }
 
+function validateCorreo(correo) {
+    if (correo && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+        throw Object.assign(new Error("El correo electrónico no tiene un formato válido."), { status: 400 });
+    }
+}
+
+function validateCurso(body) {
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+        throw Object.assign(new Error("El cuerpo debe ser un objeto JSON."), { status: 400 });
+    }
+
+    for (const field of ["nombre", "descripcion", "url"]) {
+        if (typeof body[field] !== "string" || !body[field].trim()) {
+            throw Object.assign(new Error(`El campo ${field} es obligatorio.`), { status: 400 });
+        }
+    }
+
+    let url;
+    try {
+        url = new URL(body.url);
+    } catch {
+        throw Object.assign(new Error("La URL de la imagen no es válida."), { status: 400 });
+    }
+    if (!["http:", "https:"].includes(url.protocol)) {
+        throw Object.assign(new Error("La imagen debe usar una URL HTTP o HTTPS."), { status: 400 });
+    }
+
+    return {
+        nombre: body.nombre.trim(),
+        descripcion: body.descripcion.trim(),
+        url: body.url.trim()
+    };
+}
+
+function validatePresentacion(body) {
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+        throw Object.assign(new Error("El cuerpo debe ser un objeto JSON."), { status: 400 });
+    }
+    if (typeof body.nombre !== "string" || !body.nombre.trim()) {
+        throw Object.assign(new Error("El nombre es obligatorio."), { status: 400 });
+    }
+    if (typeof body.curso !== "string" || !body.curso.trim()) {
+        throw Object.assign(new Error("El curso de interés es obligatorio."), { status: 400 });
+    }
+
+    return { nombre: body.nombre.trim(), curso: body.curso.trim() };
+}
+
 const server = createServer(async (request, response) => {
     const pathname = new URL(request.url, `http://${request.headers.host}`).pathname;
 
     try {
+        if (pathname === "/api/presentacion" && request.method === "GET") {
+            sendJson(response, 200, JSON.parse(readFileSync(presentationFile, "utf8")));
+            return;
+        }
+
+        if (pathname === "/api/presentacion" && request.method === "PUT") {
+            const presentacion = validatePresentacion(await readBody(request));
+            writeFileSync(presentationFile, `${JSON.stringify(presentacion, null, 2)}\n`);
+            sendJson(response, 200, presentacion);
+            return;
+        }
+
+        if (pathname === "/api/cursos" && request.method === "GET") {
+            sendJson(response, 200, JSON.parse(readFileSync(coursesFile, "utf8")));
+            return;
+        }
+
+        if (pathname === "/api/cursos" && request.method === "POST") {
+            const body = await readBody(request);
+            const cursoId = body && (typeof body.id === "string" || typeof body.id === "number")
+                ? body.id
+                : randomUUID();
+            const curso = { id: cursoId, ...validateCurso(body) };
+            const cursos = JSON.parse(readFileSync(coursesFile, "utf8"));
+            const index = cursos.findIndex((actual) => String(actual.id) === String(cursoId));
+            if (index === -1) {
+                cursos.push(curso);
+            } else {
+                cursos[index] = curso;
+            }
+            writeFileSync(coursesFile, `${JSON.stringify(cursos, null, 2)}\n`);
+            sendJson(response, index === -1 ? 201 : 200, curso);
+            return;
+        }
+
         if (pathname === "/api/aprendices" && request.method === "GET") {
             sendJson(response, 200, readAprendices());
             return;
@@ -102,6 +193,7 @@ const server = createServer(async (request, response) => {
         if (pathname === "/api/aprendices" && request.method === "POST") {
             const body = await readBody(request);
             const datos = validateAprendiz(body);
+            validateCorreo(datos.correo);
             const id = typeof body.id === "string" && body.id.trim()
                 ? body.id.trim()
                 : randomUUID();
@@ -116,6 +208,39 @@ const server = createServer(async (request, response) => {
             writeFileSync(dataFile, `${JSON.stringify(aprendices, null, 2)}\n`);
             sendJson(response, index === -1 ? 201 : 200, aprendiz);
             return;
+        }
+
+        const courseMatch = pathname.match(/^\/api\/cursos\/([^/]+)$/);
+        if (courseMatch) {
+            const courseId = decodeURIComponent(courseMatch[1]);
+            const cursos = JSON.parse(readFileSync(coursesFile, "utf8"));
+            const index = cursos.findIndex((curso) => String(curso.id) === courseId);
+
+            if (request.method === "PUT") {
+                if (index === -1) {
+                    sendJson(response, 404, { error: "No se encontró el curso." });
+                    return;
+                }
+                cursos[index] = {
+                    id: cursos[index].id,
+                    ...validateCurso(await readBody(request))
+                };
+                writeFileSync(coursesFile, `${JSON.stringify(cursos, null, 2)}\n`);
+                sendJson(response, 200, cursos[index]);
+                return;
+            }
+
+            if (request.method === "DELETE") {
+                if (index === -1) {
+                    sendJson(response, 404, { error: "No se encontró el curso." });
+                    return;
+                }
+                cursos.splice(index, 1);
+                writeFileSync(coursesFile, `${JSON.stringify(cursos, null, 2)}\n`);
+                response.writeHead(204);
+                response.end();
+                return;
+            }
         }
 
         const match = pathname.match(/^\/api\/aprendices\/([^/]+)$/);
@@ -143,6 +268,7 @@ const server = createServer(async (request, response) => {
                     id: aprendizId,
                     ...validateAprendiz(await readBody(request))
                 };
+                validateCorreo(aprendices[index].correo);
                 writeFileSync(dataFile, `${JSON.stringify(aprendices, null, 2)}\n`);
                 sendJson(response, 200, aprendices[index]);
                 return;
@@ -153,6 +279,7 @@ const server = createServer(async (request, response) => {
                     ...aprendices[index],
                     ...validateCambiosAprendiz(await readBody(request))
                 };
+                validateCorreo(aprendices[index].correo);
                 writeFileSync(dataFile, `${JSON.stringify(aprendices, null, 2)}\n`);
                 sendJson(response, 200, aprendices[index]);
                 return;
@@ -176,6 +303,6 @@ const server = createServer(async (request, response) => {
     }
 });
 
-server.listen(port, () => {
-    console.log(`API de aprendices disponible en http://localhost:${port}`);
+server.listen(port, "127.0.0.1", () => {
+    console.log(`API local disponible en http://127.0.0.1:${port}`);
 });

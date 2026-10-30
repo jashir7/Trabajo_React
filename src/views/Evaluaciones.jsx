@@ -39,7 +39,7 @@ function Evaluaciones() {
                     <li key={evaluacion.id}>
                         <h3>{evaluacion.name}</h3>
                         <h4>{evaluacion.email}</h4>
-                        <p>{evaluacion.comment}</p>
+                        <p>{evaluacion.body}</p>
                     </li>
                 ))}
             </div>

@@ -32,13 +32,14 @@ function UsuarioApi() {
 
     return (
         <section className="usuarios-api">
-            <h2>Instructores</h2>
-            <p>Estos instructores son obtenidos de la API de prueba JSONPlaceholder.</p>
+            <h2>Usuarios</h2>
+            <p>Estos usuarios de demostración provienen de JSONPlaceholder.</p>
             <div className="lista-usuarios">
                 {usuarios.map((usuario) => (
                     <li key={usuario.id}>
                         <h3>{usuario.name}</h3>
                         <h4>{usuario.email}</h4>
+                        <p>{usuario.address.street}, {usuario.address.city}</p>
                     </li>
                 ))}
             </div>

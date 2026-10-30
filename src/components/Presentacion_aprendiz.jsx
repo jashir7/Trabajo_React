@@ -1,33 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { guardarPresentacion, obtenerPresentacion } from "../aprendices";
 
 function PresentacionAprendiz() {
     const [nombre, setNombre] = useState("");
     const [curso, setCurso] = useState("");
     const [mensaje, setMensaje] = useState("");
+    const [error, setError] = useState("");
+    const [cargando, setCargando] = useState(true);
+    const [enviando, setEnviando] = useState(false);
     const [mostrarInfo, setMostrarInfo] = useState(false);
+    const [perfil, setPerfil] = useState(null);
 
-    const [perfil, setPerfil] = useState(() => {
-        const aprendizLocal = localStorage.getItem("aprendiz");
-        return aprendizLocal
-            ? JSON.parse(aprendizLocal)
-            : { nombre: "", curso: "" };
-    });
+    useEffect(() => {
+        obtenerPresentacion()
+            .then(setPerfil)
+            .catch((errorCarga) => {
+                console.error(errorCarga);
+                setError(errorCarga.message || "No se pudo cargar la presentación guardada.");
+            })
+            .finally(() => setCargando(false));
+    }, []);
 
-    function manejarEnvio(evento) {
+    async function manejarEnvio(evento) {
         evento.preventDefault();
+        setMensaje("");
+        setError("");
         if (nombre.trim() === "" || curso.trim() === "") {
-            setMensaje("Completa todos los campos obligatorios antes de continuar");
+            setError("Completa todos los campos obligatorios antes de continuar.");
             return;
         }
 
         const nuevosDatos = { nombre: nombre.trim(), curso: curso.trim() };
 
-        setPerfil(nuevosDatos);
-        localStorage.setItem("aprendiz", JSON.stringify(nuevosDatos));
-
-        setMensaje("Presentación enviada correctamente.");
-        setNombre("");
-        setCurso("");
+        setEnviando(true);
+        try {
+            const presentacion = await guardarPresentacion(nuevosDatos);
+            setPerfil(presentacion);
+            setMensaje("Presentación guardada correctamente.");
+            setNombre("");
+            setCurso("");
+        } catch (errorGuardando) {
+            console.error(errorGuardando);
+            setError(errorGuardando.message || "No se pudo guardar la presentación.");
+        } finally {
+            setEnviando(false);
+        }
     }
 
     return (
@@ -42,6 +59,7 @@ function PresentacionAprendiz() {
                     value={nombre}
                     onChange={(evento) => setNombre(evento.target.value)}
                     placeholder="Ejemplo: Jhon Carmona"
+                    required
                 />
                 <br /><br />
 
@@ -52,24 +70,33 @@ function PresentacionAprendiz() {
                     value={curso}
                     onChange={(evento) => setCurso(evento.target.value)}
                     placeholder="Ejemplo: Desarrollo web"
+                    required
                 />
                 <br /><br />
                 
-                <button type="submit">Enviar formulario</button>
+                <button type="submit" disabled={enviando}>
+                    {enviando ? "Guardando..." : "Enviar formulario"}
+                </button>
             </form>
-            
-            {mensaje !== "" && <p>{mensaje}</p>}
+
+            {mensaje && <p role="status">{mensaje}</p>}
+            {error && <p role="alert">{error}</p>}
 
             <h3>MI PERFIL DE APRENDIZ</h3>
 
-            {mostrarInfo && perfil.nombre && (
+            {cargando && <p role="status">Cargando presentación...</p>}
+            {mostrarInfo && perfil && (
                 <div>
                     <p><strong>Nombre:</strong> {perfil.nombre}</p>
                     <p><strong>Curso de interés:</strong> {perfil.curso}</p>
                     <br />
                 </div>
             )}
-                <button onClick={() => setMostrarInfo(!mostrarInfo)}>
+                <button
+                    type="button"
+                    onClick={() => setMostrarInfo(!mostrarInfo)}
+                    disabled={cargando || !perfil}
+                >
                     {mostrarInfo ? "Ocultar información" : "Mostrar información"}
                 </button>
         </div>

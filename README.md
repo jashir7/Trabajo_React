@@ -1,40 +1,41 @@
-# React + Vite
+# Centro Nacional Colombo Aleman
 
-## Persistencia de aprendices
+## Desarrollo local
 
-Los registros y las actualizaciones se guardan en `data/aprendices.json` mediante una API local de Node.js. Inicia la aplicación con:
+Instala las dependencias e inicia Vite junto con la API local:
 
 ```sh
 npm install
 npm run dev
 ```
 
-El comando inicia la aplicación Vite y la API local. No cierres la terminal mientras uses la aplicación. Los datos se escriben en el archivo JSON del proyecto.
+La API escucha solo en la máquina local. Mantén abierta la terminal mientras uses la aplicación.
 
-La API local admite `GET /api/aprendices` y `GET /api/aprendices/:id` para consultar, `POST /api/aprendices` para registrar, `PUT /api/aprendices/:id` para reemplazar los datos, `PATCH /api/aprendices/:id` para modificar solo los campos enviados y `DELETE /api/aprendices/:id` para eliminar.
+## Persistencia
 
-Esta persistencia local está pensada para desarrollo en esta máquina; una publicación en producción requiere desplegar también la API en un servidor con almacenamiento persistente.
+Los aprendices, los cursos y la presentación se guardan en archivos JSON dentro de `data/`:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- `data/aprendices.json`
+- `data/cursos.json`
+- `data/presentacion.json`
 
-Currently, two official plugins are available:
+Los archivos de aprendices y presentación se excluyen de Git para evitar publicar información personal. Haz copias de seguridad de esos archivos por separado; no se sincronizan entre equipos ni se incluyen automáticamente en el repositorio. El catálogo inicial de cursos está versionado y sus cambios locales pueden aparecer en Git.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Los registros anteriores de aprendices, cursos y presentación que estaban en `localStorage` se migran al JSON la próxima vez que se consulta o guarda esa sección.
 
-## React Compiler
+## API local
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `GET /api/aprendices` y `GET /api/aprendices/:id`: consultar aprendices.
+- `POST /api/aprendices`: registrar un aprendiz.
+- `PUT /api/aprendices/:id`: reemplazar sus datos.
+- `PATCH /api/aprendices/:id`: modificar campos.
+- `DELETE /api/aprendices/:id`: eliminar un aprendiz.
+- `GET /api/cursos`, `POST /api/cursos`, `PUT /api/cursos/:id` y `DELETE /api/cursos/:id`: gestionar cursos.
+- `GET /api/presentacion` y `PUT /api/presentacion`: consultar y guardar la presentación.
 
-## Expanding the ESLint configuration
+## Validación
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-
-
-Carmona es putita
-si soy 
-si es
-diego lo es mas
-
-rawr
+```sh
+npm run lint
+npm run build
+```

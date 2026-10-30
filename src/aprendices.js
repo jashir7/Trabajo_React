@@ -19,6 +19,8 @@ async function solicitarApi(url, options) {
 }
 
 let migracionPendiente;
+let migracionCursosPendiente;
+let migracionPresentacionPendiente;
 
 function migrarAprendicesLocales() {
     if (!migracionPendiente) {
@@ -86,5 +88,98 @@ export function eliminarAprendiz(id) {
     return migrarAprendicesLocales()
         .then(() => solicitarApi(`/api/aprendices/${encodeURIComponent(id)}`, {
             method: "DELETE"
+        }));
+}
+
+function migrarCursosLocales() {
+    if (!migracionCursosPendiente) {
+        migracionCursosPendiente = (async () => {
+            const guardados = localStorage.getItem("misCursos");
+            if (!guardados) {
+                return;
+            }
+
+            const cursos = JSON.parse(guardados);
+            if (!Array.isArray(cursos)) {
+                throw new Error("Los cursos guardados localmente no tienen un formato válido.");
+            }
+
+            await Promise.all(cursos.map((curso) =>
+                solicitarApi("/api/cursos", {
+                    method: "POST",
+                    body: JSON.stringify(curso)
+                })
+            ));
+            localStorage.removeItem("misCursos");
+        })().catch((error) => {
+            migracionCursosPendiente = undefined;
+            throw error;
+        });
+    }
+
+    return migracionCursosPendiente;
+}
+
+function migrarPresentacionLocal() {
+    if (!migracionPresentacionPendiente) {
+        migracionPresentacionPendiente = (async () => {
+            const guardada = localStorage.getItem("aprendiz");
+            if (!guardada) {
+                return;
+            }
+
+            const presentacion = JSON.parse(guardada);
+            if (!presentacion || typeof presentacion !== "object") {
+                throw new Error("La presentación guardada localmente no tiene un formato válido.");
+            }
+
+            await solicitarApi("/api/presentacion", {
+                method: "PUT",
+                body: JSON.stringify(presentacion)
+            });
+            localStorage.removeItem("aprendiz");
+        })().catch((error) => {
+            migracionPresentacionPendiente = undefined;
+            throw error;
+        });
+    }
+
+    return migracionPresentacionPendiente;
+}
+
+export function obtenerCursos() {
+    return migrarCursosLocales().then(() => solicitarApi("/api/cursos"));
+}
+
+export function registrarCurso(datos) {
+    return solicitarApi("/api/cursos", {
+        method: "POST",
+        body: JSON.stringify(datos)
+    });
+}
+
+export function actualizarCurso(id, datos) {
+    return solicitarApi(`/api/cursos/${encodeURIComponent(id)}`, {
+        method: "PUT",
+        body: JSON.stringify(datos)
+    });
+}
+
+export function eliminarCurso(id) {
+    return solicitarApi(`/api/cursos/${encodeURIComponent(id)}`, {
+        method: "DELETE"
+    });
+}
+
+export function obtenerPresentacion() {
+    return migrarPresentacionLocal()
+        .then(() => solicitarApi("/api/presentacion"));
+}
+
+export function guardarPresentacion(datos) {
+    return migrarPresentacionLocal()
+        .then(() => solicitarApi("/api/presentacion", {
+            method: "PUT",
+            body: JSON.stringify(datos)
         }));
 }

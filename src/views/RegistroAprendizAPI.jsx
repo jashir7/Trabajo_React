@@ -31,8 +31,9 @@ function RegistroAprendizAPI() {
 
             <form onSubmit={registrarAprendiz}>
                 <div>
-                    <label>Nombre completo</label>
+                    <label htmlFor="nombreAprendizApi">Nombre completo</label>
                     <input 
+                        id="nombreAprendizApi"
                         type="text"
                         value={nombre}
                         onChange={(evento) => setNombre(evento.target.value)}
@@ -41,8 +42,9 @@ function RegistroAprendizAPI() {
                 </div>
 
                 <div>
-                    <label>Correo electrónico</label>
+                    <label htmlFor="correoAprendizApi">Correo electrónico</label>
                     <input 
+                        id="correoAprendizApi"
                         type="email"
                         value={correo} 
                         onChange={(evento) => setCorreo(evento.target.value)}
