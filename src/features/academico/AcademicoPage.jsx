@@ -10,7 +10,7 @@ export default function AcademicoPage() {
         <li><NavLink to="/Evaluaciones">Evaluaciones</NavLink></li>
         <li><NavLink to="/competencias">Competencias</NavLink></li>
         <li><NavLink to="/Instructores">Instructores</NavLink></li>
-        <li><NavLink to="/usuarios">Usuarios</NavLink></li>
+        <li><NavLink to="/usuarios">Aprendices</NavLink></li>
       </ul>
     </div>
   );

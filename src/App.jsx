@@ -17,6 +17,7 @@ import AcademicoPage from './features/academico/AcademicoPage';
 import CompetenciasPage from './features/competencias/CompetenciasPage';
 import { usersIniciales } from './data/users';
 
+
 function App() {
   const [cursos, setCursos] = useState(() => {
     const cursosGuardados = localStorage.getItem("misCursos");
@@ -55,6 +56,7 @@ function App() {
           <Route path="/competencias" element={<CompetenciasPage />} />
           <Route path="/usuarios" element={<UsuariosPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
+          
         </Routes>
       </main>
       <Footer />
