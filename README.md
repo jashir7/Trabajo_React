@@ -1,5 +1,20 @@
 # React + Vite
 
+## Persistencia de aprendices
+
+Los registros y las actualizaciones se guardan en `data/aprendices.json` mediante una API local de Node.js. Inicia la aplicación con:
+
+```sh
+npm install
+npm run dev
+```
+
+El comando inicia la aplicación Vite y la API local. No cierres la terminal mientras uses la aplicación. Los datos se escriben en el archivo JSON del proyecto.
+
+La API local admite `GET /api/aprendices` y `GET /api/aprendices/:id` para consultar, `POST /api/aprendices` para registrar, `PUT /api/aprendices/:id` para reemplazar los datos, `PATCH /api/aprendices/:id` para modificar solo los campos enviados y `DELETE /api/aprendices/:id` para eliminar.
+
+Esta persistencia local está pensada para desarrollo en esta máquina; una publicación en producción requiere desplegar también la API en un servidor con almacenamiento persistente.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

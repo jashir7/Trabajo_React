@@ -14,7 +14,7 @@ function Navbar() {
         <li><NavLink to="/acerca-de">Acerca de</NavLink></li>
         <li><NavLink to="/usuarios">Usuarios</NavLink></li>
         <li><NavLink to="/academico">Academico</NavLink></li>
-        <li><NavLink to="/RegistroAprendizAPI">RegistroAprendiz</NavLink></li>
+        <li><NavLink to="/MetodosHttp">Metodos Http</NavLink></li>
       </ul>
     </nav>
   );

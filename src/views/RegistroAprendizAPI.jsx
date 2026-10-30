@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { registrarAprendiz as guardarAprendiz } from "../aprendices";
 
 function RegistroAprendizAPI() {
     const [nombre, setNombre] = useState("");
@@ -6,37 +7,22 @@ function RegistroAprendizAPI() {
     const [mensaje, setMensaje] = useState("");
     const [enviado, setEnviado] = useState(false);
 
-    function registrarAprendiz(evento) {
+    async function registrarAprendiz(evento) {
         evento.preventDefault();
         setMensaje("");
         setEnviado(true);
 
-        fetch("https://jsonplaceholder.typicode.com/posts", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                title: nombre,
-                body: correo, 
-                userId: 1
-            })
-        })
-        .then((respuesta) => {
-            if (!respuesta.ok) {
-                throw new Error("No se pudo enviar el registro");
-            }
-            return respuesta.json();
-        })
-        .then((datos) => {
-            setMensaje(`Solicitud exitosa. Id de prueba ${datos.id}`);
+        try {
+            await guardarAprendiz({ nombre: nombre.trim(), correo: correo.trim() });
+            setMensaje("Aprendiz registrado correctamente y disponible para actualizar.");
             setNombre("");
             setCorreo("");
-        })
-        .catch(() => {
-            setMensaje("Ocurrió un error al enviar los datos");
-        })
-        .finally(() => {
+        } catch (error) {
+            console.error(error);
+            setMensaje(error.message || "No se pudo completar el registro. Inténtalo de nuevo.");
+        } finally {
             setEnviado(false);
-        });
+        }
     }
 
     return (

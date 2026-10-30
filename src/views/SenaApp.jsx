@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 export default function Academico() {
   return (
     
-    <div>
+    <div className="academico">
         <h1>Indice de Contenidos</h1>
         <ul>
         

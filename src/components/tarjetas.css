@@ -1,8 +1,14 @@
-.url{
-display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px; 
-  padding: 20px;
+.url {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 20px;
+  margin-block: 24px;
+}
+
+.url article {
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  background: #fff;
 }
 
 .url img {
@@ -10,4 +16,22 @@ display: grid;
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
+}
+
+.url article h3,
+.url article p,
+.url article button {
+  margin: 16px;
+}
+
+.url article h3 {
+  margin-bottom: 8px;
+}
+
+.url article p {
+  margin-top: 0;
+}
+
+.url article button + button {
+  margin-left: 0;
 }

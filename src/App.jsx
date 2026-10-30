@@ -14,8 +14,10 @@ import UsuarioApi from './views/Usuarios';
 import Evaluaciones from './views/Evaluaciones';
 import Fichas from './views/Fichas'
 import Academico from './views/SenaApp';
-import Competencias from './views/competencias';
+import Competencias from './views/Competencias';
 import RegistroAprendizAPI from './views/RegistroAprendizAPI';
+import Metodos from './views/MetodosHttp';
+import ActualizarAprendiz from './views/ActualizarAprendiz';
 
 function App() {
   const [cursos, setCursos] = useState(() => {
@@ -44,6 +46,9 @@ function App() {
           <Route path="/competencias" element={<Competencias />} />
           <Route path="/usuarios" element={<UsuarioApi />} />
           <Route path="/RegistroAprendizAPI" element={<RegistroAprendizAPI />} />
+          <Route path="/ActualizarAprendiz" element={<ActualizarAprendiz />} />
+          <Route path="/MetodosHttp" element={<Metodos />} />
+
         </Routes>
       </main>
       <Footer />
