@@ -1,17 +1,5 @@
 [
   {
-    "id": 1,
-    "nombre": "Desarrollo web",
-    "descripcion": "Aprende a crear paginas web modernas y atractivas",
-    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCwCqRGMfQUWePoAJ6P-5zBjxqDWrSS4X273Mso9diWWTx8Zm9SdE-iJT&s=10"
-  },
-  {
-    "id": 2,
-    "nombre": "Bases de datos",
-    "descripcion": "Aprende a gestionar y manipular bases de datos",
-    "url": "https://i.pinimg.com/1200x/fd/d0/9c/fdd09cacc647c7aea8164f0eca7b6b80.jpg"
-  },
-  {
     "id": 3,
     "nombre": "Inteligencia artificial",
     "descripcion": "Aprende a desarrollar soluciones basadas en inteligencia artificial",
